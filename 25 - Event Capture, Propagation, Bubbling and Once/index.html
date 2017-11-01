@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Understanding JavaScript's Capture</title>
+</head>
+<body class="bod">
+
+  <div class="one">
+    <div class="two">
+      <div class="three">
+      </div>
+    </div>
+  </div>
+
+<style>
+  html {
+    box-sizing: border-box;
+  }
+  *, *:before, *:after { box-sizing: inherit; }
+
+  div {
+    width:100%;
+    padding:100px;
+  }
+
+  .one {
+    background: thistle;
+  }
+
+  .two {
+    background:mistyrose;
+  }
+
+  .three {
+    background:coral;
+  }
+</style>
+
+<button></button>
+<script>
+  const divs = document.querySelectorAll('div')
+
+  divs.forEach(div => div.addEventListener('click', logEvent))
+
+  function logEvent (e) {
+    console.log(e.currentTarget.classList[0])
+    e.stopPropagation()
+  }
+</script>
+</body>
+</html>
+
+<!-- 
+  What have I learned?
+
+  Två faser:
+  1. Först uteifrån och in (capture fasen, registrerar vilka element jag "går igenom" på klicket tills jag kommer till ett stop)
+  2. Bubblar uppåt
+
+  e.stopPropagation() gör vad den låter som
+
+  .addEventListener() tar ett optional tredje arg, object med props (bools) capture true/false och once true/false
+  once avregistrerar eventListener efter en träff
+  capture vänder uppåner, så att man firar redan i capture fasen
+
+  .currenTarget vs .target, håll tungan rätt i mun och testa mig fram!
+
+ -->
